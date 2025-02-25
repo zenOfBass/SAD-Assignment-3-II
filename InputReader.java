@@ -1,3 +1,4 @@
+// InputReader filter
 class InputReader implements Filter {
     private Pipe output;
     private String inputText;
@@ -12,7 +13,16 @@ class InputReader implements Filter {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        try {
+            String[] lines = inputText.split("\n");
+            for (String line : lines) {
+                if (!line.trim().isEmpty()) {
+                    output.putLine(new Line(line.trim()));
+                }
+            }
+            output.closeForWriting();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
