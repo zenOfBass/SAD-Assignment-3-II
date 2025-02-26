@@ -1,3 +1,5 @@
+import java.util.List;
+
 class CircularShiftGenerator implements Filter {
     private Pipe input;
     private Pipe output;
@@ -9,7 +11,17 @@ class CircularShiftGenerator implements Filter {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        try {
+            Line line;
+            while ((line = input.getLine()) != null) {
+                List<Line> shifts = line.generateCircularShifts();
+                for (Line shift : shifts) {
+                    output.putLine(shift);
+                }
+            }
+            output.closeForWriting();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
