@@ -1,4 +1,5 @@
-@startuml KWIC System
+@startuml
+component "KWIC System" {
 
 interface Filter {
   +run(): void
@@ -50,10 +51,6 @@ class OutputFormatter {
   +run(): void
 }
 
-class KWICSystem {
-  +main(args: String[]): void
-}
-
 Filter <|.. InputReader
 Filter <|.. CircularShiftGenerator
 Filter <|.. Sorter
@@ -75,5 +72,4 @@ Sorter --> Pipe: reads from/writes to
 OutputFormatter --> Pipe: reads from
 
 note right of Line: "Implements Comparable<Line>"
-
 @enduml
