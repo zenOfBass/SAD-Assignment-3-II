@@ -56,16 +56,16 @@ Filter <|.. CircularShiftGenerator
 Filter <|.. Sorter
 Filter <|.. OutputFormatter
 
-Line <.. CircularShiftGenerator: creates
-Line <.. Sorter: sorts
-Line <.. Pipe: transfers
+Line <.. CircularShiftGenerator
+Line <.. Sorter
+Line <.. Pipe
 
-InputReader --> Pipe: writes to
-CircularShiftGenerator --> Pipe: reads from/writes to
-Sorter --> Pipe: reads from/writes to
-OutputFormatter --> Pipe: reads from
+InputReader --> Pipe
+CircularShiftGenerator --> Pipe
+Sorter --> Pipe
+OutputFormatter --> Pipe
 
 note right of Line: "Implements Comparable<Line>"
+note left of Filter: "Extends Runnable"
 }
 @enduml
-
