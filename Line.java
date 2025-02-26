@@ -10,7 +10,7 @@ class Line implements Comparable<Line> {
 
     public List<Line> generateCircularShifts() {
         //TODO
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+        throw new UnsupportedOperationException("Unimplemented method 'generateCircularShifts'");
     }
 
     public List<String> getWords() {

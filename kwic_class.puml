@@ -1,0 +1,79 @@
+@startuml KWIC System
+
+interface Filter {
+  +run(): void
+}
+
+class Pipe {
+  -buffer: List<Line>
+  -closed: boolean
+  +putLine(line: Line): void
+  +getLine(): Line
+  +closeForWriting(): void
+}
+
+class Line {
+  -words: List<String>
+  +Line(words: List<String>)
+  +Line(line: String)
+  +getWords(): List<String>
+  +generateCircularShifts(): List<Line>
+  +compareTo(other: Line): int
+  +toString(): String
+}
+
+class InputReader {
+  -output: Pipe
+  -inputText: String
+  +InputReader(input: Pipe, output: Pipe)
+  +processInput(inputText: String): void
+  +run(): void
+}
+
+class CircularShiftGenerator {
+  -input: Pipe
+  -output: Pipe
+  +CircularShiftGenerator(input: Pipe, output: Pipe)
+  +run(): void
+}
+
+class Sorter {
+  -input: Pipe
+  -output: Pipe
+  +Sorter(input: Pipe, output: Pipe)
+  +run(): void
+}
+
+class OutputFormatter {
+  -input: Pipe
+  +OutputFormatter(input: Pipe, output: Pipe)
+  +run(): void
+}
+
+class KWICSystem {
+  +main(args: String[]): void
+}
+
+Filter <|.. InputReader
+Filter <|.. CircularShiftGenerator
+Filter <|.. Sorter
+Filter <|.. OutputFormatter
+
+Line <.. CircularShiftGenerator: creates
+Line <.. Sorter: sorts
+Line <.. Pipe: transfers
+
+KWICSystem ..> InputReader: creates
+KWICSystem ..> CircularShiftGenerator: creates
+KWICSystem ..> Sorter: creates
+KWICSystem ..> OutputFormatter: creates
+KWICSystem ..> Pipe: creates
+
+InputReader --> Pipe: writes to
+CircularShiftGenerator --> Pipe: reads from/writes to
+Sorter --> Pipe: reads from/writes to
+OutputFormatter --> Pipe: reads from
+
+note right of Line: "Implements Comparable<Line>"
+
+@enduml
