@@ -72,4 +72,5 @@ Sorter --> Pipe: reads from/writes to
 OutputFormatter --> Pipe: reads from
 
 note right of Line: "Implements Comparable<Line>"
+}
 @enduml
