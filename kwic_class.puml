@@ -60,12 +60,6 @@ Line <.. CircularShiftGenerator: creates
 Line <.. Sorter: sorts
 Line <.. Pipe: transfers
 
-KWICSystem ..> InputReader: creates
-KWICSystem ..> CircularShiftGenerator: creates
-KWICSystem ..> Sorter: creates
-KWICSystem ..> OutputFormatter: creates
-KWICSystem ..> Pipe: creates
-
 InputReader --> Pipe: writes to
 CircularShiftGenerator --> Pipe: reads from/writes to
 Sorter --> Pipe: reads from/writes to
@@ -74,3 +68,4 @@ OutputFormatter --> Pipe: reads from
 note right of Line: "Implements Comparable<Line>"
 }
 @enduml
+
