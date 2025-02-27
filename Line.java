@@ -9,8 +9,21 @@ class Line implements Comparable<Line> {
     }
 
     public List<Line> generateCircularShifts() {
-        //TODO
-        throw new UnsupportedOperationException("Unimplemented method 'generateCircularShifts'");
+        List<Line> shifts = new ArrayList<>();
+        if (words.isEmpty()) {
+            return shifts;
+        }
+
+        int n = words.size();
+        for (int i = 0; i < n; i++) {
+            List<String> shiftedWords = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                shiftedWords.add(words.get((i + j) % n));
+            }
+            shifts.add(new Line(shiftedWords));
+        }
+
+        return shifts;
     }
 
     public List<String> getWords() {
