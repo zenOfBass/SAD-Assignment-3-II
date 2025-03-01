@@ -69,8 +69,3 @@ The system utilizes Java threads to process data concurrently:
 ## UML Diagram
 
 The UML diagram for the KWIC system is provided in the Kwic_class.puml file and its image representation in Uml.png.
-
-## Technical Requirements
-
-- Java 8 or higher
-- No additional libraries required
