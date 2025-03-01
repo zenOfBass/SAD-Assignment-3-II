@@ -39,6 +39,9 @@ class Line implements Comparable<Line> {
     // Method to get the words in the line
     public List<String> getWords() { return new ArrayList<>(words); }
 
+    @Override
+    public String toString() { return String.join(" ", words); }
+
     // Override the compareTo method to compare lines lexicographically
     @Override
     public int compareTo(Line o) {
