@@ -18,8 +18,7 @@ class OutputFormatter implements Filter {
             
             // Read lines from the input pipe until it is closed
             while ((line = input.getLine()) != null) {
-                // Print each line with a count
-                System.out.println(count + ". " + line);
+                System.out.println(count + ". " + line); // Print each line with a count
                 count++;
             }
 

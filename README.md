@@ -7,13 +7,16 @@ This project uses a pipe and filter architecture to implement a Key Word in Cont
 - `CircularShiftGenerator.java`: Generates circular shifts for each line of text.
 - `Filter.java`: Abstract interface for all filters.
 - `InputReader.java`: Reads input text and sends lines to the next filter.
-- `Kwic_class.puml`: UML diagram for the KWIC system.
 - `KWICSystem.java`: Main class to run the KWIC system.
 - `Line.java`: Represents a line of text and provides methods to generate circular shifts and compare lines.
 - `OutputFormatter.java`: Formats and prints the sorted lines.
 - `Pipe.java`: Connects filters and provides methods to transfer lines between filters.
 - `Sorter.java`: Sorts the circularly shifted lines.
-- `README.md`: This file.
+
+## Documentation
+
+- `README.md`: *Hello world!*
+- `Kwic_class.puml`: UML diagram for the KWIC system in Plant Text form.
 - `Uml.png`: Image of the UML diagram.
 
 ## Components

@@ -19,8 +19,7 @@ class Sorter implements Filter {
     @Override
     public void run() {
         try {
-            // List to store all circular shifts
-            List<Line> allShifts = new ArrayList<>();
+            List<Line> allShifts = new ArrayList<>(); // List to store all circular shifts
             Line line;
             
             // Read lines from the input pipe until it is closed

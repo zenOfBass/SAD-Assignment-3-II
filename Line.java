@@ -39,6 +39,7 @@ class Line implements Comparable<Line> {
     // Method to get the words in the line
     public List<String> getWords() { return new ArrayList<>(words); }
 
+    // Override the toString method to return a line object as a string
     @Override
     public String toString() { return String.join(" ", words); }
 

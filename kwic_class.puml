@@ -19,8 +19,8 @@ class Line {
   +Line(line: String)
   +getWords(): List<String>
   +generateCircularShifts(): List<Line>
-  +compareTo(other: Line): int
   +toString(): String
+  +compareTo(other: Line): int
 }
 
 class InputReader {
