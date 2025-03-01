@@ -16,17 +16,6 @@ This project implements a Key Word in Context (KWIC) system using a pipe and fil
 - `README.md`: This file.
 - `Uml.png`: Image of the UML diagram.
 
-## Architecture
-
-The KWIC system is designed using the Pipe-and-Filter architectural pattern, which promotes modularity, reusability, and scalability. Filters process data independently and pipes transfer data between filters.
-
-### Benefits of Pipe-and-Filter Architecture
-
-- **Modularity**: Each filter performs a specific task independently
-- **Reusability**: Filters can be reused in different contexts
-- **Parallelism**: Filters can operate concurrently, improving performance
-- **Extensibility**: New filters can be added without modifying existing code
-
 ## Components
 
 ### Filter Interface
@@ -56,7 +45,7 @@ The `Line` class represents a line of text and provides:
 1. Input text is processed by the `InputReader` and converted to `Line` objects
 2. Each `Line` is sent through a `Pipe` to the `CircularShiftGenerator`
 3. The `CircularShiftGenerator` creates all circular shifts and sends them to the `Sorter`
-4. The `Sorter` collects all shifts, sorts them according to the rule a < A < b < B < ... < Z
+4. The `Sorter` collects all shifts, sorts them according to the rule a < A < b < B < ... < y < Y < z < Z
 5. The `OutputFormatter` receives the sorted shifts and formats them for output
 
 ## Concurrency
@@ -65,7 +54,3 @@ The system utilizes Java threads to process data concurrently:
 - Each filter runs in its own thread
 - Thread synchronization is handled through the `Pipe` implementation
 - Flow control prevents buffer overflow through wait/notify mechanisms
-
-## UML Diagram
-
-The UML diagram for the KWIC system is provided in the Kwic_class.puml file and its image representation in Uml.png.

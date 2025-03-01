@@ -13,7 +13,7 @@ class Line implements Comparable<Line> {
     // Constructor to initialize the line with a string
     public Line(String line) { 
         this.words = new ArrayList<>(               
-            Arrays.asList(            /* Convert the array to a list */
+            Arrays.asList(            /* Convert the array to a list for split method */
             line.split("\\s+")  /* "\\s+" matches one or more whitespace characters */
             )
         ); 
