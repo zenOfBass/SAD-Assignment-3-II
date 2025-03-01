@@ -18,13 +18,13 @@ This project implements a Key Word in Context (KWIC) system using a pipe and fil
 
 ## Components
 
-### Filter Interface
+### Filter
 
 The `Filter` interface defines the behavior for all filters in the system. Each filter implements the `Runnable` interface to support concurrent execution.
 
 ### Pipe
 
-The `Pipe` class serves as a communication channel between filters, implementing a thread-safe buffer with synchronization mechanisms to handle concurrent access.
+The `Pipe` class is a communication channel between filters, implementing a thread-safe buffer with synchronization mechanisms to handle concurrent access.
 
 ### Line
 
@@ -33,7 +33,7 @@ The `Line` class represents a line of text and provides:
 - Implementation of the `Comparable` interface for sorting
 - Utility methods for text processing
 
-### Filters
+### The Filters
 
 1. **InputReader**: Parses input text and transforms it into `Line` objects
 2. **CircularShiftGenerator**: Creates all possible circular shifts of each line
@@ -45,12 +45,12 @@ The `Line` class represents a line of text and provides:
 1. Input text is processed by the `InputReader` and converted to `Line` objects
 2. Each `Line` is sent through a `Pipe` to the `CircularShiftGenerator`
 3. The `CircularShiftGenerator` creates all circular shifts and sends them to the `Sorter`
-4. The `Sorter` collects all shifts, sorts them according to the rule a < A < b < B < ... < y < Y < z < Z
+4. The `Sorter` collects all shifts, and sorts them according to the rule a < A < b < B < ... < y < Y < z < Z
 5. The `OutputFormatter` receives the sorted shifts and formats them for output
 
 ## Concurrency
 
 The system utilizes Java threads to process data concurrently:
-- Each filter runs in its own thread
+- Each filter runs in its thread
 - Thread synchronization is handled through the `Pipe` implementation
 - Flow control prevents buffer overflow through wait/notify mechanisms
