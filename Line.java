@@ -1,11 +1,16 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class Line implements Comparable<Line> {
     private List<String> words;
 
     public Line(List<String> words) {
         this.words = new ArrayList<>(words);
+    }
+
+    public Line(String line) {
+        this.words = new ArrayList<>(Arrays.asList(line.split("\\s+")));
     }
 
     public List<Line> generateCircularShifts() {
