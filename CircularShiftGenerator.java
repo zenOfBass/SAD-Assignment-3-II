@@ -18,20 +18,14 @@ class CircularShiftGenerator implements Filter {
     public void run() {
         try {
             Line line;
+
             // Read lines from the input pipe until it is closed
             while ((line = input.getLine()) != null) {
-                // Generate circular shifts for the line
-                List<Line> shifts = line.generateCircularShifts();
-                // Put each circular shift into the output pipe
-                for (Line shift : shifts) {
-                    output.putLine(shift);
-                }
+                List<Line> shifts = line.generateCircularShifts();   // Generate circular shifts for the line
+                for (Line shift : shifts) { output.putLine(shift); } // Put each circular shift into the output pipe
             }
-            // Close the output pipe for writing
-            output.closeForWriting();
-        } catch (InterruptedException e) {
-            // Print stack trace if an InterruptedException occurs
-            e.printStackTrace();
-        }
+            
+            output.closeForWriting(); // Close the output pipe for writing
+        } catch (InterruptedException e) { e.printStackTrace(); } // Print stack trace if an InterruptedException occurs
     }
 }

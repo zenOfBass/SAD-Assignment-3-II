@@ -3,9 +3,7 @@ class OutputFormatter implements Filter {
     private Pipe input;
     
     // Constructor to initialize the input pipe
-    public OutputFormatter(Pipe input, Pipe output) {
-        this.input = input;
-    }
+    public OutputFormatter(Pipe input, Pipe output) { this.input = input; }
 
     // Override the run method from the Filter interface
     @Override
@@ -17,6 +15,7 @@ class OutputFormatter implements Filter {
 
             Line line;
             int count = 1;
+            
             // Read lines from the input pipe until it is closed
             while ((line = input.getLine()) != null) {
                 // Print each line with a count
@@ -24,11 +23,7 @@ class OutputFormatter implements Filter {
                 count++;
             }
 
-            // Print the footer for the KWIC Index System Output
-            System.out.println("-------------------------");
-        } catch (InterruptedException e) {
-            // Print stack trace if an InterruptedException occurs
-            e.printStackTrace();
-        }
+            System.out.println("-------------------------"); // Print the footer for the KWIC Index System Output
+        } catch (InterruptedException e) { e.printStackTrace(); } // Print stack trace if an InterruptedException occurs
     }
 }

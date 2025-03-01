@@ -6,14 +6,10 @@ class InputReader implements Filter {
     private String inputText;
     
     // Constructor to initialize the output pipe
-    public InputReader(Pipe input, Pipe output) {
-        this.output = output;
-    }
+    public InputReader(Pipe input, Pipe output) { this.output = output; }
 
     // Method to read lines from the input text
-    public void readLines(String text) {
-        this.inputText = text;
-    }
+    public void readLines(String text) { this.inputText = text; }
 
     // Override the run method from the Filter interface
     @Override
@@ -21,6 +17,7 @@ class InputReader implements Filter {
         try {
             // Split the input text into lines
             String[] lines = inputText.split("\n");
+
             // Process each line
             for (String line : lines) {
                 // Check if the line is not empty after trimming
@@ -29,11 +26,8 @@ class InputReader implements Filter {
                     output.putLine(new Line(line.trim()));
                 }
             }
-            // Close the output pipe for writing
-            output.closeForWriting();
-        } catch (InterruptedException e) {
-            // Print stack trace if an InterruptedException occurs
-            e.printStackTrace();
-        }
+
+            output.closeForWriting(); // Close the output pipe for writing
+        } catch (InterruptedException e) { e.printStackTrace(); } // Print stack trace if an InterruptedException occurs
     }
 }
