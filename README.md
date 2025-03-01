@@ -1,6 +1,6 @@
 # KWIC System
 
-This project implements a Key Word in Context (KWIC) system using a pipe and filter architecture. The KWIC system processes a given text input to generate circular shifts of each line, sorts these shifts, and formats the output.
+This project uses a pipe and filter architecture to implement a Key Word in Context (KWIC) system. The KWIC system processes a given text input to generate circular shifts of each line, sorts these shifts, and formats the output.
 
 ## Project Structure
 
