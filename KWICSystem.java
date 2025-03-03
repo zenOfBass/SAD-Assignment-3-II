@@ -2,7 +2,8 @@ public class KWICSystem {
     public static void main(String[] args) {
         try {
             // Example usage with sample input
-            String input = "The quick brown fox\nJumps over the lazy dog";
+            String input = 
+            "Software Architecture and Design\n aA aaa\n aa Aaa\n Aa Aaa\n AA aaa\n University of Central Oklahoma\n univ of central OK\n";
 
             // Create and connect filters through pipes
             Pipe inputToCShift = new Pipe();
