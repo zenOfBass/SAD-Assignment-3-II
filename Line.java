@@ -21,10 +21,12 @@ class Line implements Comparable<Line> {
 
     // Method to generate circular shifts of the line
     public List<Line> generateCircularShifts() {
+        // List to store the circular shifts
         List<Line> shifts = new ArrayList<>();
+        // Number of words in the line
         int numWords = words.size();
 
-        if (words.isEmpty()) { return shifts; }
+        if (words.isEmpty()) { return shifts; } // Return an empty list if the line is empty
 
         // Generate circular shifts by rotating the words
         for (int i = 0; i < numWords; i++) {
@@ -45,19 +47,38 @@ class Line implements Comparable<Line> {
 
     // Override the compareTo method to compare lines lexicographically
     @Override
-    public int compareTo(Line o) {
-        if (words.isEmpty() && o.words.isEmpty()) { return 0; }
-        if (words.isEmpty()) { return -1; }
-        if (o.words.isEmpty()) { return 1; }
+    public int compareTo(Line other) {
+        // Get the list of words from both lines
+        List<String> thisWords = this.getWords(), otherWords = other.getWords();
+        // Get the minimum size of the two lists
+        int minSize = Math.min(thisWords.size(), otherWords.size());
 
-        int minLength = Math.min(words.size(), o.words.size()); // Get the minimum length of the two lines
+        for (int i = 0; i < minSize;) {
+            // Compare ignoring case to group similar letters
+            int caseInsensitiveComparison = thisWords.get(i).compareToIgnoreCase(otherWords.get(i));
 
-        // Compare words lexicographically (by order in dictionary)
-        for (int i = 0; i < minLength; i++) {
-            int comparison = words.get(i).compareTo(o.words.get(i)); // Compare the words at index of i
-            if (comparison != 0) { return comparison; }              // Return the comparison result if the words are different
+            if (caseInsensitiveComparison != 0) { return caseInsensitiveComparison;} // Different letters, return the comparison
+            else {
+                // Same letter, different case
+                String thisWord = thisWords.get(i), otherWord = otherWords.get(i);
+                // Find the first position where characters differ if any
+                int length = Math.min(thisWord.length(), otherWord.length());
+
+                for (int j = 0; j < length; j++) {
+                    // Get the characters at the current position
+                    char thisChar = thisWord.charAt(j), otherChar = otherWord.charAt(j); 
+
+                    if (Character.toLowerCase(thisChar) == Character.toLowerCase(otherChar)) {            // Same letter
+                        if (thisChar != otherChar) { return Character.isLowerCase(thisChar) ? -1 : 1; }   // a < A
+                    } else { return Character.toLowerCase(thisChar) - Character.toLowerCase(otherChar); } // Different letters
+                }
+
+                // If we get here, one word is a prefix of the other
+                return thisWord.length() - otherWord.length();
+            }
         }
-        
-        return Integer.compare(words.size(), o.words.size()); // Return the comparison result based on the number of words
+
+        // If all words compared are the same, compare based on number of words
+        return Integer.compare(thisWords.size(), otherWords.size());
     }
 }
