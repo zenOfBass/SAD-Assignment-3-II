@@ -1,8 +1,13 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+
 public class KWICSystem {
     public static void main(String[] args) {
         try {
-            // Example usage with sample input
-            String input = "The quick brown fox\nJumps over the lazy dog";
+            // Read the input file
+            String inputFilePath = "C:\\Users\\kick_\\OneDrive\\Documents\\School\\SAD\\Assignment-3-II\\test.txt";
+            String input = new String(Files.readAllBytes(Paths.get(inputFilePath)));
 
             // Create and connect filters through pipes
             Pipe inputToCShift = new Pipe();
@@ -35,6 +40,10 @@ public class KWICSystem {
             t3.join();
             t4.join();
 
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            System.err.println("Error reading input file: " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

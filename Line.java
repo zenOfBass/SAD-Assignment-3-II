@@ -48,37 +48,40 @@ class Line implements Comparable<Line> {
     // Override the compareTo method to compare lines lexicographically
     @Override
     public int compareTo(Line other) {
-        // Get the list of words from both lines
-        List<String> thisWords = this.getWords(), otherWords = other.getWords();
-        // Get the minimum size of the two lists
+        List<String> thisWords = this.getWords();
+        List<String> otherWords = other.getWords();
         int minSize = Math.min(thisWords.size(), otherWords.size());
 
-        for (int i = 0; i < minSize;) {
-            // Compare ignoring case to group similar letters
-            int caseInsensitiveComparison = thisWords.get(i).compareToIgnoreCase(otherWords.get(i));
+        for (int i = 0; i < minSize; i++) {
+            String thisWord = thisWords.get(i);
+            String otherWord = otherWords.get(i);
 
-            if (caseInsensitiveComparison != 0) { return caseInsensitiveComparison;} // Different letters, return the comparison
-            else {
-                // Same letter, different case
-                String thisWord = thisWords.get(i), otherWord = otherWords.get(i);
-                // Find the first position where characters differ if any
-                int length = Math.min(thisWord.length(), otherWord.length());
+            // Case-insensitive comparison
+            int cmp = thisWord.compareToIgnoreCase(otherWord);
+            if (cmp != 0)
+                return cmp;
 
-                for (int j = 0; j < length; j++) {
-                    // Get the characters at the current position
-                    char thisChar = thisWord.charAt(j), otherChar = otherWord.charAt(j); 
+            // If identical case-insensitively, compare case-sensitive but favor lowercase
+            for (int j = 0; j < Math.min(thisWord.length(), otherWord.length()); j++) {
+                char c1 = thisWord.charAt(j);
+                char c2 = otherWord.charAt(j);
 
-                    if (Character.toLowerCase(thisChar) == Character.toLowerCase(otherChar)) {            // Same letter
-                        if (thisChar != otherChar) { return Character.isLowerCase(thisChar) ? -1 : 1; }   // a < A
-                    } else { return Character.toLowerCase(thisChar) - Character.toLowerCase(otherChar); } // Different letters
+                if (Character.toLowerCase(c1) == Character.toLowerCase(c2)) {
+                    if (c1 != c2) {
+                        return Character.isLowerCase(c1) ? -1 : 1; // Favor lowercase
+                    }
+                } else {
+                    return Character.compare(Character.toLowerCase(c1), Character.toLowerCase(c2));
                 }
+            }
 
-                // If we get here, one word is a prefix of the other
-                return thisWord.length() - otherWord.length();
+            // If one word is a prefix of another, the shorter word comes first
+            if (thisWord.length() != otherWord.length()) {
+                return Integer.compare(thisWord.length(), otherWord.length());
             }
         }
 
-        // If all words compared are the same, compare based on number of words
+        // If words are identical up to minSize, compare by number of words
         return Integer.compare(thisWords.size(), otherWords.size());
     }
 }
