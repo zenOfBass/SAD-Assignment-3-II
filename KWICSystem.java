@@ -1,12 +1,19 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class KWICSystem {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask the user for the name of the file to be read
+        System.out.print("\r\nEnter the name of the file to be read: ");
+        String inputFileName = scanner.nextLine();
+
         try {
             // Read the input file
-            String inputFilePath = "C:\\Users\\kick_\\OneDrive\\Documents\\School\\SAD\\Assignment-3-II\\test.txt";
+            String inputFilePath = Paths.get(inputFileName).toAbsolutePath().toString();
             String input = new String(Files.readAllBytes(Paths.get(inputFilePath)));
 
             // Create and connect filters through pipes
@@ -44,6 +51,8 @@ public class KWICSystem {
             System.err.println("Error reading input file: " + e.getMessage());
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            scanner.close();
         }
     }
 }

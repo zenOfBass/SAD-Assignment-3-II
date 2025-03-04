@@ -9,18 +9,12 @@ class OutputFormatter implements Filter {
     @Override
     public void run() {
         try {
-            // Print the header for the KWIC Index System Output
-            System.out.println("KWIC Index System Output:");
-            System.out.println("-------------------------");
-
             Line line;
             
             // Read lines from the input pipe until it is closed
             while ((line = input.getLine()) != null) {
                 System.out.println(line);
             }
-
-            System.out.println("-------------------------"); // Print the footer for the KWIC Index System Output
         } catch (InterruptedException e) { e.printStackTrace(); } // Print stack trace if an InterruptedException occurs
     }
 }
