@@ -14,12 +14,10 @@ class OutputFormatter implements Filter {
             System.out.println("-------------------------");
 
             Line line;
-            int count = 1;
             
             // Read lines from the input pipe until it is closed
             while ((line = input.getLine()) != null) {
-                System.out.println(count + ". " + line); // Print each line with a count
-                count++;
+                System.out.println(line);
             }
 
             System.out.println("-------------------------"); // Print the footer for the KWIC Index System Output
