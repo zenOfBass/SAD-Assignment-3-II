@@ -1,71 +1,67 @@
-@startuml
-component "KWIC System" {
+@startuml kwic
+package "KWIC System" {
 
-interface Filter {
-  +run(): void
-}
+    class KWICDataStore {
+        -List~Line~ originalLines
+        -List~Line~ circularShifts
+        -List~Line~ filteredShifts
+        -List~String~ noiseWords
+        +addLine(Line line)
+        +getLines() List~Line~
+        +addCircularShift(Line shift)
+        +getCircularShifts() List~Line~
+        +addFilteredShift(Line shift)
+        +getFilteredShifts() List~Line~
+        +isNoiseWord(String word) boolean
+    }
 
-class Pipe {
-  -buffer: List<Line>
-  -closed: boolean
-  +putLine(line: Line): void
-  +getLine(): Line
-  +closeForWriting(): void
-}
+    class Master {
+        -KWICDataStore dataStore
+        +run()
+        +getResults() List~Line~
+    }
 
-class Line {
-  -words: List<String>
-  +Line(words: List<String>)
-  +Line(line: String)
-  +getWords(): List<String>
-  +generateCircularShifts(): List<Line>
-  +toString(): String
-  +compareTo(other: Line): int
-}
+    class LineProcessor {
+        -KWICDataStore dataStore
+        +processInput(String input)
+    }
 
-class InputReader {
-  -output: Pipe
-  -inputText: String
-  +InputReader(input: Pipe, output: Pipe)
-  +processInput(inputText: String): void
-  +run(): void
-}
+    class ShiftGenerator {
+        -KWICDataStore dataStore
+        +generateShifts()
+    }
 
-class CircularShiftGenerator {
-  -input: Pipe
-  -output: Pipe
-  +CircularShiftGenerator(input: Pipe, output: Pipe)
-  +run(): void
-}
+    class NoiseFilter {
+        -KWICDataStore dataStore
+        +filterNoiseWords()
+    }
 
-class Sorter {
-  -input: Pipe
-  -output: Pipe
-  +Sorter(input: Pipe, output: Pipe)
-  +run(): void
-}
+    class LineSorter {
+        -KWICDataStore dataStore
+        +sortLines()
+    }
 
-class OutputFormatter {
-  -input: Pipe
-  +OutputFormatter(input: Pipe, output: Pipe)
-  +run(): void
-}
+    class Line {
+        -List~String~ words
+        +Line(List~String~ words)
+        +Line(String line)
+        +getWords() List~String~
+        +generateCircularShifts() List~Line~
+        +toString() String
+        +compareTo(Line other) int
+        +getFirstWord() String
+    }
 
-Filter <|.. InputReader
-Filter <|.. CircularShiftGenerator
-Filter <|.. Sorter
-Filter <|.. OutputFormatter
-
-Line <.. CircularShiftGenerator
-Line <.. Sorter
-Line <.. Pipe
-
-InputReader --> Pipe
-CircularShiftGenerator --> Pipe
-Sorter --> Pipe
-OutputFormatter --> Pipe
-
-note right of Line: "Implements Comparable<Line>"
-note left of Filter: "Extends Runnable"
+    KWICDataStore --> Line
+    Master --> KWICDataStore
+    Master --> LineProcessor
+    Master --> ShiftGenerator
+    Master --> NoiseFilter
+    Master --> LineSorter
+    WebController --> Master
+    LineProcessor --> KWICDataStore
+    ShiftGenerator --> KWICDataStore
+    NoiseFilter --> KWICDataStore
+    LineSorter --> KWICDataStore
 }
 @enduml
