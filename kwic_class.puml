@@ -1,67 +1,63 @@
 @startuml kwic
 package "KWIC System" {
 
-    class KWICDataStore {
-        -List~Line~ originalLines
-        -List~Line~ circularShifts
-        -List~Line~ filteredShifts
-        -List~String~ noiseWords
-        +addLine(Line line)
-        +getLines() List~Line~
-        +addCircularShift(Line shift)
-        +getCircularShifts() List~Line~
-        +addFilteredShift(Line shift)
-        +getFilteredShifts() List~Line~
-        +isNoiseWord(String word) boolean
-    }
-
     class Master {
-        -KWICDataStore dataStore
-        +run()
-        +getResults() List~Line~
+        +void execute()
+        -void sequenceModules()
     }
 
-    class LineProcessor {
-        -KWICDataStore dataStore
-        +processInput(String input)
+    class LineStorage {
+        -dataRepresentation
+        +void setChar(int line, int word, int charPos, char character)
+        +char getChar(int line, int word, int charPos)
+        +int wordCount(int line)
+        +int lineCount()
+        +void initialize()
     }
 
-    class ShiftGenerator {
-        -KWICDataStore dataStore
-        +generateShifts()
+    class Input {
+        -LineStorage storage
+        +void read(String source)
+        -void processLine(String line)
+        +void setLineStorage(LineStorage storage)
     }
 
-    class NoiseFilter {
-        -KWICDataStore dataStore
-        +filterNoiseWords()
+    class CircularShift {
+        -shiftRepresentation
+        +void setup()
+        +char getChar(int shift, int word, int charPos)
+        +void setChar(int shift, int word, int charPos, char character)
+        +int wordCount(int shift)
+        +int shiftCount()
+        +void setLineStorage(LineStorage storage)
     }
 
-    class LineSorter {
-        -KWICDataStore dataStore
-        +sortLines()
+    class Alphabetizer {
+        -indexRepresentation
+        +void alphabetize()
+        +int getShiftIndex(int position)
+        +int count()
+        +void setCircularShift(CircularShift shifter)
     }
 
-    class Line {
-        -List~String~ words
-        +Line(List~String~ words)
-        +Line(String line)
-        +getWords() List~String~
-        +generateCircularShifts() List~Line~
-        +toString() String
-        +compareTo(Line other) int
-        +getFirstWord() String
+    class Output {
+        +void writeOutput(String destination)
+        -void formatLine(int lineIndex)
+        +void setAlphabetizer(Alphabetizer alphabetizer)
+        +void setCircularShift(CircularShift shifter)
     }
 
-    KWICDataStore --> Line
-    Master --> KWICDataStore
-    Master --> LineProcessor
-    Master --> ShiftGenerator
-    Master --> NoiseFilter
-    Master --> LineSorter
-    WebController --> Master
-    LineProcessor --> KWICDataStore
-    ShiftGenerator --> KWICDataStore
-    NoiseFilter --> KWICDataStore
-    LineSorter --> KWICDataStore
+    Master --> Input
+    Master --> LineStorage
+    Master --> CircularShift
+    Master --> Alphabetizer
+    Master --> Output
+    Master --> Alphabetizer
+    
+    Input --> LineStorage
+    CircularShift --> LineStorage
+    Alphabetizer --> CircularShift
+    Output --> Alphabetizer
+    Output --> CircularShift
 }
 @enduml
